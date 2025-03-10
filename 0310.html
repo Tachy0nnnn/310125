@@ -1,0 +1,47 @@
+<html>
+<head>
+    <meta charset="UIF-8">
+    <title>0310</title>
+    <style>
+        .grad {
+            width: 300px;
+            height: 100px;
+            margin: 10px 0px;
+            border: 1px solid black;
+            display: inline-block;/*排成一橫排*/
+        }
+        .anim {
+            width: 400px;
+            height: 100px;
+            margin: 10px 0px;
+        }
+        #a1 {
+            background: repeating-linear-gradient(45deg,red 45%,white 50%,red  55%);
+            animation: k1 1s infinite linear;
+        }
+        @keyframes k1 {
+            0%{background: repeating-linear-gradient(45deg,red 45%,white 50%,red 55%);}
+            50%{background: repeating-linear-gradient(45deg,red 45%,white 50%,red 55%);}
+            100%{background: repeating-linear-gradient(45deg,red 45%,white 50%,red 55%);}
+        }s
+
+        #d1{
+            background: repeating-linear-gradient(red  );
+        }
+        #c1{
+            background:conic-gradient(red,green,blue,rgb(192, 26, 26));
+        }
+        #c2 {
+            background: repeating-conic-gradient(red 10%,white 15%,red 20%);
+        }
+    </style>
+</head>
+<body>
+    <div id="d1"></div>
+    <div id="c1" class="grad"></div>
+    <div id="c2" class="grad"></div>
+    <div id="a1" class="anim"></div>
+    
+
+</body>
+</html>
