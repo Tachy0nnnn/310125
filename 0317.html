@@ -1,0 +1,118 @@
+<html>
+<head>
+    <meta chatset="UTF-8">
+    <title>0317筆記-框線</title>
+    <style>
+        div{
+            width: 200px;
+            height: 100px;
+            margin-bottom: 10px;
+            border: 1px black solid;
+        }
+        
+        /*上左下右*/
+        #d1{
+            border-width: 10px 20px 30px 40px;
+        }
+        #d2{
+            border-width: 10px;
+            border-style: solid dashed dotted double;
+        }
+        #d3{
+            border-width: 10px;
+            border-style: ridge;
+        }
+        #d4{
+            border: 20px solid transparent;
+            border-color: red yellow transparent/*透明但存在*/ blue;
+        }
+        #d5{
+            width: 0px;
+            height: 0px;
+            border: 20px solid transparent;
+            border-color: red yellow green blue;
+            border-width: 30px 10px 90px 20px;
+        }
+        .radius{
+            display: inline-block;
+        }
+        #d6{
+            border-radius: 20px 90px 10px 40px;
+        }
+        #d7{
+            border-radius: 50%;
+        }
+        #d8{
+            border-radius: 50px;
+        }
+        #d9{
+            border-radius: 100% 100% 0 0;
+        }
+        #d10{
+            border-radius: 50px 50px 0 0;
+        }
+        #D11{
+            border-radius: 50px 50px 0 0;
+            border-color: red yellow green blue;
+        }
+        #d12{
+            width: 0px;
+            height: 0px;
+            border-width: 100px 100px 100px 100px;
+            border-radius: 100px 100px 0 0;
+            border-color: aquamarine rebeccapurple yellow green;
+        }
+        /************************************************************************************************/
+        #canvas{
+            width: 600px;
+            height: 600px;
+            border: 1px solid black;
+            position: relative;
+        }
+        #item1{
+            background-color: red;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            z-index: 10;
+        }
+        #item2{
+            background-color: yellow;
+            position: absolute;
+            top: 150px;
+            left: 150px;
+            z-index: 30;
+        }
+        #item3{
+            background-color: blue;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            z-index: 20;
+
+            transform: rotate(30deg) translate(100px,50px) scale(2);
+        }
+
+    </style>
+</head>
+<body>
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <div id="d3"></div>
+    <div id="d4"></div>
+    <div id="d5"></div>
+    <div id="d6" class="radius"></div>
+    <div id="d7" class="radius"></div>
+    <div id="d8" class="radius"></div>
+    <div id="d9" class="radius"></div>
+    <div id="d10" class="radius"></div>
+    <div id="d11" class="radius"></div>
+    <div id="d12" class="radius"></div>
+    <hr>
+    <div id="canvas">
+        <div id="item1"></div>
+        <div id="item2"></div>
+        <div id="item3"></div>
+    </div>
+</body>
+</html>
