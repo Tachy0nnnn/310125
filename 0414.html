@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title>0414-js計時器</title>
+    <style>
+        #timer {
+            font-size: 64pt ;
+        }
+        #lottery {
+            font-size: 90pt;
+            font-family: Impact, sans-serif;
+        }
+        #timeber{
+            width: 600px;
+            height: 20px;
+            background-color: green;
+        }
+
+    </style>
+    <script>
+        function pageInit(){
+            t1=0;
+        }
+        function timerStart(){
+            if(t1>0) return;
+            time=0;
+            document.getElementById("timer").innerHTML="00:00";
+            t1=setInterval(function(){
+                time++;
+                mm=Math.floor(time/600);
+                ss=time%60;
+                mm=(mm>9)?mm:"0"+mm;
+                ss=(ss>9)?ss:"0"+ss;
+                document.getElementById("timer").innerHTML=`${mm}:${ss}`;
+            },1000);
+            
+        }
+        function timeStop(){
+            (t1)?clearInterval(t1):alert("尚未開始計時!");
+            t1=0;
+        }
+        ///////////////////////////////////////////////////////////////////////////////////
+        function lotttery(){
+            ssetTimeout(clearInterval,3000,
+                setInterval(function(){
+                    randnum=Math.floor(Math.random()*100);
+                    document.getElementById("lottery").innerHTML=(randnum>9)?randnum:"0"+randnum;
+                },50)
+            );
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        function timebarStart(timeout){
+            tbWidth=600;
+            tbCounter=timeout*10;
+            tbUnit=tbWidth/tbCounter;
+            setTimeout(clearInterval,timeout*1000,
+                etInterval(function(){
+                    tb=document.getElementById("timeber");
+                    tbCounter--;
+                    if(tbCounter>150){
+                        tb.style.backgroundColor="green";
+                    }else if(tbCounter>100){
+                        tb.style.backgroundColor="orange";
+                    }else{
+                        tb.style.backgroundColor="red";
+                    }
+                    .style.width=(tbCounter*tbUnit)+"px";
+                },100);
+            );
+        }
+    </script>
+</head>
+<body onload="pageInit();">
+    <div id="timer">00:00</div>
+    <button onclick="timerStart();">開始</button>
+    <button onclick="timeStop();">計時停止</button>
+    <hr>
+    <div id="lottery">00</div>
+    <botton onclick="lotttery()">樂透</botton>
+    <hr>
+    <div id="timeber"></div>
+    <button onclick="timebarStart(30)">開始</button>
+</body>
+</html>
