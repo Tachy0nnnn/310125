@@ -1,6 +1,6 @@
 <html>
 <head>
-    <meta charset="UTF=8">
+    <meta charset="UTF-8">
     <title>0519-宇宙射擊</title>
     <style>
         #universal{
@@ -54,6 +54,11 @@
         function die(obj){
             clearInterval(obj.move);
             obj.remove();
+        }
+        function newUFO(){
+            var u=document.createElement("img");
+            u.src="pic/ufo.png";
+            u.pos={}
         }
         function mykeydown(){
             event.preventDefault();
