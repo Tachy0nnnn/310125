@@ -1,0 +1,164 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>梨子下落遊戲</title>
+  <style>
+    #board {
+      position: relative;
+      width: 320px;
+      height: 560px;
+      border: 2px solid #888;
+      margin: 20px auto;
+      background: #eee;
+    }
+    .cell {
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      transition: top 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell img {
+      width: 60px;
+      height: 60px;
+      pointer-events: none;
+    }
+    #timer, #score {
+      text-align: center;
+      font-size: 20px;
+    }
+    #overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      display: none;
+    }
+  </style>
+</head>
+<body onload="gameInit()">
+  <div id="timer">剩餘時間：30</div>
+  <div id="score">得分：0</div>
+  <div id="board">
+    <div id="overlay"></div>
+  </div>
+
+  <script>
+    function gameInit(){
+      board = document.getElementById("board");
+      overlay = document.getElementById("overlay");
+      timerText = document.getElementById("timer");
+      scoreText = document.getElementById("score");
+      // 只清除方塊，不重建 overlay
+      Array.from(document.getElementsByClassName("cell")).forEach(e => e.remove());
+      blocks = [[],[],[],[],[],[],[]]; // 7 rows
+      time = 30;
+      score = 0;
+      gameOver = false;
+      overlay.style.display = "none";
+      timerText.innerHTML = "剩餘時間：" + time;
+      scoreText.innerHTML = "得分：" + score;
+
+      // 初始化 7 行，每行隨機一格塞梨子
+      for(let r=0; r<7; r++){
+        let col = Math.floor(Math.random()*4);
+        for(let c=0;c<4;c++){
+          if(c == col){
+            spawnBlock(r, c);
+          }
+        }
+      }
+
+      countdown = setInterval(() => {
+        time--;
+        timerText.innerHTML = "剩餘時間：" + time;
+        if(time <= 0){
+          endGame("時間到！你的得分：" + score);
+        }
+      }, 1000);
+    }
+
+    function spawnBlock(row, col){
+      let block = document.createElement("div");
+      block.className = "cell";
+      block.style.left = (col * 80) + "px";
+      block.style.top = (row * 80) + "px";
+      block.dataset.row = row;
+      block.dataset.col = col;
+      block.addEventListener("click", clickBlock);
+
+      let img = document.createElement("img");
+      img.src = "pic/tetoL.webp";
+      block.appendChild(img);
+
+      board.appendChild(block);
+      blocks[row][col] = block;
+    }
+
+    function clickBlock() {                  //new way0
+        if (gameOver) return;
+        let row = parseInt(this.dataset.row);
+        let col = parseInt(this.dataset.col);
+        if (row !== 6) {
+            endGame("只能點最下面那一排！");
+            return;
+        }
+
+        // 成功得分後，先移除被點方塊
+        this.remove();
+        blocks[6][col] = null;
+        score++;
+        scoreText.innerHTML = "得分：" + score;
+
+        // 所有方塊向下掉一格
+        for (let r = 6; r > 0; r--) {
+            for (let c = 0; c < 4; c++) {
+            blocks[r][c] = blocks[r-1][c];
+             if (blocks[r][c]) {
+                blocks[r][c].dataset.row = r;
+                blocks[r][c].style.top = (r * 80) + "px";
+                }
+             }
+        }
+
+    // 清空最上層
+    for (let c = 0; c < 4; c++) {
+        blocks[0][c] = null;
+    }
+
+    // 最上層隨機一格生成新方塊
+    let newCol = Math.floor(Math.random() * 4);
+    for (let c = 0; c < 4; c++) {
+        if (c === newCol) {
+            spawnBlock(0, c);
+            }
+        }
+    }                                        //0 h
+
+    function endGame(msg){
+      clearInterval(countdown);
+      gameOver = true;
+      overlay.innerHTML = msg + "<br><button onclick='gameInit()'>重新開始</button>";
+      overlay.style.display = "flex";
+    }
+
+    // 點空白處失敗
+    document.getElementById("board").addEventListener("click", function(e){
+      if(gameOver)return;
+      if(e.target.className !== "cell" && e.target.tagName !== "IMG"){
+        endGame("你點錯位置了！");
+      }
+    });
+  </script>
+</body>
+</html>
